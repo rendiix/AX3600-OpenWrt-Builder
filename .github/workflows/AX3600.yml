@@ -74,7 +74,19 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
-    - name: Compile the firmware
+    - name: Build tools
+        run: |
+          cd openwrt
+          make tools/install -j$(nproc) V=s || \
+          make tools/install V=s
+
+    - name: Build toolchain
+        run: |
+          cd openwrt
+          make toolchain/install -j$(nproc) V=s || \
+          make toolchain/install V=s
+
+    - name: Build target images
       id: compile
       run: |
         cd openwrt
