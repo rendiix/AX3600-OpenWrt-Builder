@@ -1,5 +1,17 @@
-name: Build IPQ807x
-on: [push]
+name: Build AX3600
+on:
+  repository_dispatch:
+  workflow_dispatch:
+
+env:
+  REPO_URL: https://github.com/Ansuel/openwrt
+  REPO_BRANCH: ipq807x-5.15-pr-ax3600-increase
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: AX3600.config
+  SETUP_SH: setup.sh
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+  TZ: Asia/Jakarta
 
 jobs:
     build:
@@ -9,6 +21,9 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v2
+              with:
+                repository: robimarko/openwrt
+                ref: ipq807x-5.15-pr
 
             - name: Update and install feeds
               run: |
