@@ -22,8 +22,8 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
               with:
-                repository: Ansuel/openwrt
-                ref: ipq807x-5.15-pr-ax3600-increase
+                repository: dimfishr/openwrt
+                ref: ipq807x-5.15-pr-increase
 
             - name: Update and install feeds
               run: |
