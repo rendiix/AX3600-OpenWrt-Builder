@@ -9,8 +9,8 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/Ansuel/openwrt
-  REPO_BRANCH: ipq807x-5.15-pr-ax3600-increase
+  REPO_URL: https://github.com/dimfishr/openwrt
+  REPO_BRANCH: ipq807x-5.15-pr-increase
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: AX3600.config
   SETUP_SH: setup.sh
