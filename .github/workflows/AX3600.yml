@@ -93,7 +93,10 @@ jobs:
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
     - name: TAR output
-      run: tar -cvf .tar stag*
+      run: |
+        cd openwrt
+        tar -cvf ipq807x-toolchain.tar staging_dir
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
