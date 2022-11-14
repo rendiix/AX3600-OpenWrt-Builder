@@ -10,7 +10,14 @@ git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/luci-app-
 git clone https://github.com/kiddin9/openwrt-packages.git package/openwrt-packages
 svn export --force https://github.com/shidahuilang/openwrt-package/branches/master/openwrt_oscam package/openwrt-packages/openwrt_oscam
 shopt -s extglob
-rm -R -f package/openwrt-packages/!("adguardhome"|"luci-app-adguardhome"|"luci-app-cpufreq"|"luci-app-argon-config"|"luci-app-openvpn-server"|"openwrt_oscam"|"luci-app-oscam"|"qBittorrent"|"luci-app-qbittorrent"|"rblibtorrent"|"qBittorrent-Enhanced-Edition"|"qtbase"|"qttools"|"luci-app-rclone"|"luci-app-zerotier"|"luci-app-wizard"|"vsftpd-alt"|"luci-app-vsftpd"|"luci-theme-argon"|"luci-theme-edge"|"luci-app-easymesh")
+rm -R -f package/openwrt-packages/!("luci-app-cpufreq"|"luci-app-argon-config"|"luci-app-openvpn-server"|"luci-app-zerotier"|"luci-app-wizard"|"luci-theme-argon"|"luci-theme-edge"|"luci-app-easymesh")
+
+sed -i '$a  \
+CONFIG_CPU_FREQ_GOV_POWERSAVE=y \
+CONFIG_CPU_FREQ_GOV_USERSPACE=y \
+CONFIG_CPU_FREQ_GOV_ONDEMAND=y \
+CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y \
+' target/linux/ipq807x/config-5.15
 
 mkdir -p files/etc/uci-defaults
 cat > files/etc/uci-defaults/xxx_config << EOF
