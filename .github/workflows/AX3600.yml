@@ -94,8 +94,7 @@ jobs:
 
     - name: TAR output
       run: |
-        cd openwrt
-        tar -cvf ipq807x-toolchain.tar staging_dir
+        tar -cvf ipq807x-toolchain.tar openwrt/staging_dir
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
