@@ -94,13 +94,13 @@ jobs:
 
     - name: TAR output
       run: |
-        tar -cvf ipq807x-toolchain.tar openwrt/staging_dir
+        tar -cJf ipq807x-toolchain.tar.xz openwrt/staging_dir
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
         name: ipq807x-toolchain
-        path: ipq807xx-toolchain.tar
+        path: ipq807x-toolchain.tar.xz
 
     - name: Check space usage
       if: (!cancelled())
