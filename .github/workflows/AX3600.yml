@@ -92,15 +92,15 @@ jobs:
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
-    - name: TAR output
-      run: |
-        tar -cJf ipq807x-toolchain.tar.xz openwrt/staging_dir
+        #- name: TAR output
+        #run: |
+        #tar -cJf ipq807x-toolchain.tar.xz openwrt/staging_dir
 
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: ipq807x-toolchain
-        path: ipq807x-toolchain.tar.xz
+        #- name: Upload artifacts
+        #uses: actions/upload-artifact@v2
+        #with:
+        #name: ipq807x-toolchain
+        #path: ipq807x-toolchain.tar.xz
 
     - name: Check space usage
       if: (!cancelled())
