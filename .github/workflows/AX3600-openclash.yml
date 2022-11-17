@@ -49,7 +49,7 @@ jobs:
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         cd openwrt
-        echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >> feeds.conf.default
+        echo 'src-git haibo https://github.com/haiibo/openwrt-packages' feeds.conf.default
 
 
     - name: Update feeds
@@ -64,7 +64,6 @@ jobs:
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $SETUP_SH
         cd openwrt
-        git clone --depth=1 https://github.com/vernesong/OpenClash.git package/OpenClash
         $GITHUB_WORKSPACE/$SETUP_SH
 
     - name: Download package
