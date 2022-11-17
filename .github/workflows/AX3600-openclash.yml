@@ -1,4 +1,4 @@
-name: Build AX3600 Increase
+name: Build AX3600 Increase Passwall + OpenClash
 on:
   repository_dispatch:
   workflow_dispatch:
