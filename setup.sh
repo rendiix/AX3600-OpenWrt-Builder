@@ -6,11 +6,11 @@ sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' packag
 
 git clone https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 
-git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/luci-app-temp-status
+#git clone https://github.com/gSpotx2f/luci-app-temp-status.git package/luci-app-temp-status
 
-git clone https://github.com/kiddin9/openwrt-packages.git package/openwrt-packages
+#git clone https://github.com/kiddin9/openwrt-packages.git package/openwrt-packages
 
-svn export --force https://github.com/shidahuilang/openwrt-package/branches/master/openwrt_oscam package/openwrt-packages/openwrt_oscam
+#svn export --force https://github.com/shidahuilang/openwrt-package/branches/master/openwrt_oscam package/openwrt-packages/openwrt_oscam
 
 shopt -s extglob
 rm -R -f package/openwrt-packages/!("luci-app-cpufreq"|"luci-app-argon-config"|"luci-app-openvpn-server"|"luci-app-zerotier"|"luci-theme-argon"|"luci-app-easymesh")
