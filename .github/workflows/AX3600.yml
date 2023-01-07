@@ -123,13 +123,8 @@ jobs:
         touch release.txt
         echo "OpenWrt Xiaomi AX3600：" >> release.txt
         echo "IP:192.168.1.1" >> release.txt
-        echo "User：root" >> release.txt
-        echo "Pass ：<notset>" >> release.txt
         echo "Source：https://github.com/robimarko/openwrt" >> release.txt
         echo "Kernel：5.15" >> release.txt
-        echo "" >> release.txt
-        echo "Wifi enable by default" >> release.txt
-        echo "Pass wifi：20HAA0BL1BJ" >> release.txt
         echo "${{ env.useVersionInfo }}" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
 
