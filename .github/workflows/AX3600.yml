@@ -39,6 +39,15 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
+    - name: notif process
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event.repository.name }}: Clone source code
+        format: markdown
+
     - name: Clone source code
       working-directory: /workdir
       run: |
@@ -46,11 +55,38 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
+    - name: notif process
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event.repository.name }}: Update feeds
+        format: markdown
+
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
+    - name: notif process
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event.repository.name }}: Install feeds
+        format: markdown
+
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
+
+    - name: notif process
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event.repository.name }}: Load custom configurations
+        format: markdown
 
     - name: Load custom configuration
       run: |
@@ -59,6 +95,15 @@ jobs:
         chmod +x $SETUP_SH
         cd openwrt
         $GITHUB_WORKSPACE/$SETUP_SH
+
+    - name: notif process
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event.repository.name }}: Download package
+        format: markdown
 
     - name: Download package
       id: package
@@ -69,17 +114,44 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
+    - name: notif process
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event.repository.name }}: Build tools
+        format: markdown
+
     - name: Build tools
       run: |
         cd openwrt
         make tools/install -j$(nproc) V=s || \
         make tools/install V=s
 
+    - name: notif process
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event.repository.name }}: Build toolchain
+        format: markdown
+
     - name: Build toolchain
       run: |
         cd openwrt
         make toolchain/install -j$(nproc) V=s || \
         make toolchain/install V=s
+
+    - name: notif process
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event.repository.name }}: Build target images
+        format: markdown
 
     - name: Build target images
       id: compile
@@ -129,6 +201,15 @@ jobs:
         echo "${{ env.useVersionInfo }}" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
 
+    - name: notif process
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event.repository.name }}: Generate release
+        format: markdown
+
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
@@ -138,6 +219,26 @@ jobs:
         tag_name: ${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
+
+    - name: Send to Telegram
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ✅ ${{ github.event.repository.name }}
+          OpenWrt for Xiaomi AX3600 has been update
+          Updated: ${{ steps.tag.outputs.release_date }}
+
+          • Repo: $REPO_URL
+          • Branch: $REPO_BRANCH
+          • Hash: ${{ steps.getHash.outputs.commitHash }}
+          • Download: 
+            [openwrt-ipq807x-generic-xiaomi_ax3600-initramfs-factory.ubi](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi_ax3600-initramfs-factory.ubi)
+            [openwrt-ipq807x-generic-xiaomi_ax3600-initramfs-uImage.itb](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi_ax3600-initramfs-uImage.itb)
+            [openwrt-ipq807x-generic-xiaomi_ax3600-squashfs-factory.ubi](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi_ax3600-squashfs-factory.ubi)
+            [openwrt-ipq807x-generic-xiaomi_ax3600-squashfs-sysupgrade.bin](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi_ax3600-squashfs-sysupgrade.bin)
+        format: markdown
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main

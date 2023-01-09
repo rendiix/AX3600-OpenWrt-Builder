@@ -13,7 +13,7 @@ name: Update Checker
 
 env:
   REPO_URL: https://github.com/robimarko/openwrt
-  REPO_BRANCH: ipq807x-5.15-pr
+  REPO_BRANCH: ipq807x-5.15-pr-final
 
 on:
   workflow_dispatch:
@@ -31,6 +31,7 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
         echo "commitHash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        echo "commitHashLong=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
     - name: Compare Commit Hash
       id: cacheHash
@@ -43,6 +44,26 @@ jobs:
       if: steps.cacheHash.outputs.cache-hit != 'true'
       run: |
         echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
+
+    - name: Send to Telegram
+      if: steps.cacheHash.outputs.cache-hit != 'true'
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        format: markdown
+        disable_web_page_preview: "True"
+        message: |
+            🔗 Repo https://github.com/${{github.repository}}
+
+            ✅ *Update versi sumber terdeteksi*
+            • Repo: $REPO_URL
+            • Branch: $REPO_BRANCH
+            • Hash: ${{ steps.getHash.outputs.commitHash }}
+
+            ⚙️  memulai proses build
+
+            [Source](https://github.com/${{github.repository}})
 
     - name: Trigger build
       if: steps.cacheHash.outputs.cache-hit != 'true'
