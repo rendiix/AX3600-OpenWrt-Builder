@@ -57,11 +57,11 @@ jobs:
             🔗 Repo https://github.com/${{github.repository}}
 
             ✅ *Update versi sumber terdeteksi*
-            • Repo: $REPO_URL
-            • Branch: $REPO_BRANCH
+            • Repo: ${{ env.REPO_URL }}
+            • Branch: ${{ env.REPO_BRANCH }}
             • Hash: ${{ steps.getHash.outputs.commitHash }}
 
-            ⚙️  memulai proses build
+            ⚙️  memulai proses build OpenWrt AX3600
 
             [Source](https://github.com/${{github.repository}})
 
