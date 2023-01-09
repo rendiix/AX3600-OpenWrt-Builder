@@ -187,7 +187,7 @@ jobs:
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
         echo "last_commit=$(git -C openwrt rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-        echo "release_tag=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
+        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "release_date=$(date +"%Y/%m/%d")" >> $GITHUB_OUTPUT
         touch release.txt
         echo "OpenWrt Xiaomi AX3600：" >> release.txt
