@@ -196,6 +196,7 @@ jobs:
         echo "Kernel：5.15" >> release.txt
         echo "${{ env.useVersionInfo }}" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
+        echo "file_url="
 
     - name: notif process
       uses: appleboy/telegram-action@master
@@ -228,7 +229,7 @@ jobs:
 
           • Repo: ${{ env.REPO_URL }}
           • Branch: ${{ env.REPO_BRANCH }}
-          • Hash: ${{ steps.getHash.outputs.commitHash }}
+          • Hash: ${{ steps.tag.outputs.last_commit }}
           • Download: 
             [openwrt-ax3600-initramfs-factory.ubi](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi\_ax3600-initramfs-factory.ubi)
             [openwrt-ax3600-initramfs-uImage.itb](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi\_ax3600-initramfs-uImage.itb)
