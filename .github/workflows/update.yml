@@ -13,7 +13,7 @@ name: Update Checker
 
 env:
   REPO_URL: https://github.com/robimarko/openwrt
-  REPO_BRANCH: ipq807x-5.15-pr-final
+  REPO_BRANCH: ipq807x-5.15-pr
 
 on:
   workflow_dispatch:
