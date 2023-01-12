@@ -213,7 +213,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: "OpenWrt AX3600: ${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}"
+        tag_name: OpenWrt_${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
 
