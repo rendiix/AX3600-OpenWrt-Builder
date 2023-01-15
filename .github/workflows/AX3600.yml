@@ -159,27 +159,11 @@ jobs:
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
-        #- name: TAR output
-        #run: |
-        #tar -cJf ipq807x-toolchain.tar.xz openwrt/staging_dir
-
-        #- name: Upload artifacts
-        #uses: actions/upload-artifact@v2
-        #with:
-        #name: ipq807x-toolchain
-        #path: ipq807x-toolchain.tar.xz
-
-    - name: Check space usage
+    - name: Remove packages
+      id: remove
       if: (!cancelled())
-      run: df -hT
-
-    - name: Organize files
-      id: organize
-      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd openwrt/bin/targets/*/*
-        rm -rf packages
-        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        rm -rf openwrt/bin/targets/ipq807x/generic/packages
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Generate release tag
@@ -189,14 +173,7 @@ jobs:
         echo "last_commit=$(git -C openwrt rev-parse --short HEAD)" >> $GITHUB_OUTPUT
         echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "release_date=$(date +"%Y/%m/%d")" >> $GITHUB_OUTPUT
-        touch release.txt
-        echo "OpenWrt Xiaomi AX3600：" >> release.txt
-        echo "IP:192.168.1.1" >> release.txt
-        echo "Source：https://github.com/robimarko/openwrt" >> release.txt
-        echo "Kernel：5.15" >> release.txt
-        echo "${{ env.useVersionInfo }}" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
-        echo "file_url="
 
     - name: notif process
       uses: appleboy/telegram-action@master
@@ -207,15 +184,15 @@ jobs:
           ${{ github.event.repository.name }}: Generate release
         format: markdown
 
-    - name: Upload firmware to release
-      uses: softprops/action-gh-release@v1
+    - name: Create a release
+      uses: ncipollo/release-action@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+        name: "Update  ${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}"
+        tag: "ax3600-openwrt-${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}"
+        generateReleaseNotes: false
+        makeLatest: true
+        artifacts: openwrt/bin/targets/ipq807x/generic/*
 
     - name: Send to Telegram
       uses: appleboy/telegram-action@master
