@@ -188,7 +188,7 @@ jobs:
       uses: ncipollo/release-action@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
       with:
-        name: "Update  ${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}"
+        name: "Xiaomi AX3600 update ${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}"
         tag: "ax3600-openwrt-${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}"
         generateReleaseNotes: false
         makeLatest: true
