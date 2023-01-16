@@ -54,7 +54,8 @@ jobs:
         format: markdown
         disable_web_page_preview: "True"
         message: |
-            🔗 Repo https://github.com/${{github.repository}}
+            📁 OpenWrt AX3600
+            🔗 Repo: [link](https://github.com/${{github.repository}})
 
             ✅ *Update versi sumber terdeteksi*
             • Repo: ${{ env.REPO_URL }}
