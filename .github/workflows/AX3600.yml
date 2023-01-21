@@ -1,4 +1,4 @@
-name: Build AX3600 Robimarko
+name: Build AX3600 Openwrt
 on:
   repository_dispatch:
   workflow_dispatch:
