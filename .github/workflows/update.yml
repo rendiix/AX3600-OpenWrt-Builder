@@ -71,7 +71,7 @@ jobs:
       uses: peter-evans/repository-dispatch@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        event-type: Update to ${{ steps.getHash.outputs.commitHash }}
+        event-type: OpenWrt AX3600 Update to ${{ steps.getHash.outputs.commitHash }}
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
