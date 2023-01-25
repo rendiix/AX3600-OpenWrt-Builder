@@ -207,11 +207,7 @@ jobs:
           • Repo: ${{ env.REPO_URL }}
           • Branch: ${{ env.REPO_BRANCH }}
           • Hash: ${{ steps.tag.outputs.last_commit }}
-          • Download: 
-            [openwrt-ax3600-initramfs-factory.ubi](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi\_ax3600-initramfs-factory.ubi)
-            [openwrt-ax3600-initramfs-uImage.itb](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi\_ax3600-initramfs-uImage.itb)
-            [openwrt-ax3600-squashfs-factory.ubi](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi\_ax3600-squashfs-factory.ubi)
-            [openwrt-ax3600-squashfs-sysupgrade.bin](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/download/${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }}/openwrt-ipq807x-generic-xiaomi\_ax3600-squashfs-sysupgrade.bin)
+          • Download: [github release page](https://github.com/rendiix/AX3600-OpenWrt-Builder/releases/tag/ax3600-openwrt-${{ steps.tag.outputs.release_tag }}-${{ steps.tag.outputs.last_commit }})
         format: markdown
 
     - name: Delete workflow runs
