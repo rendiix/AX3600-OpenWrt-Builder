@@ -32,7 +32,7 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
         echo "commitHash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
         echo "commitHashLong=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-        echo "commitMessage=$(git show -s --format='%s')" >> $GITHUB_OUTPUT
+        echo "commitMessage=$(git log --pretty="[%an] : %s [%cr]\n")" >> $GITHUB_OUTPUT
 
     - name: Compare Commit Hash
       id: cacheHash
