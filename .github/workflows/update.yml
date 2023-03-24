@@ -32,7 +32,7 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
         echo "commitHash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
         echo "commitHashLong=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-        echo "commitMessage=$(git log --pretty="[%an] : %s [%cr]\n")" >> $GITHUB_OUTPUT
+        echo "commitMessage=$(git log --pretty="> -\[%an\] : %s \[%cr\]  ")" >> $GITHUB_OUTPUT
 
     - name: Compare Commit Hash
       id: cacheHash
@@ -61,7 +61,8 @@ jobs:
             ✅ *Update versi sumber terdeteksi*
             • Repo: ${{ env.REPO_URL }}
             • Branch: ${{ env.REPO_BRANCH }}
-            • Changelog: ${{ steps.getHash.outputs.commitMessage }}
+            • Changelog: 
+            ${{ steps.getHash.outputs.commitMessage }}
 
             ⚙️  memulai proses build OpenWrt AX3600
 
