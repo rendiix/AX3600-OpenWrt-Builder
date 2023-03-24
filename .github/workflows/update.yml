@@ -62,6 +62,7 @@ jobs:
             • Repo: ${{ env.REPO_URL }}
             • Branch: ${{ env.REPO_BRANCH }}
             • Changelog: 
+
             ${{ steps.getHash.outputs.commitMessage }}
 
             ⚙️  memulai proses build OpenWrt AX3600
