@@ -29,7 +29,7 @@ jobs:
     - name: Get Commit Hash
       id: getHash
       run: |
-        git clone --depth 10 $REPO_URL -b $REPO_BRANCH .
+        git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
         echo "commitHash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
         echo "commitHashLong=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
         echo "commitMessage=$(git log --pretty="[%h] [%aN] %s [%cr]")" >> $GITHUB_OUTPUT
