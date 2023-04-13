@@ -61,9 +61,7 @@ jobs:
             ✅ *Update versi sumber terdeteksi*
             • Repo: ${{ env.REPO_URL }}
             • Branch: ${{ env.REPO_BRANCH }}
-            • Changelog: 
-
-            ${{ steps.getHash.outputs.commitMessage }}
+            • Changelog: *${{ steps.getHash.outputs.commitMessage }}*
 
             ⚙️  memulai proses build OpenWrt AX3600
 
